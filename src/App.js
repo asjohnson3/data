@@ -24,7 +24,9 @@ function App() {
       <Header as="h1" style={{ marginTop: 50 }}>
         Data Visualizer
       </Header>
-      {values.length > 0 && <Columns values={values} />}
+      {values.length > 0 && (
+        <Columns values={values} onNewFilter={(data) => setValues(data)} />
+      )}
       <ColumnCheckboxes values={values} />
       <Container style={{ marginTop: 50 }}>
         <ValueForm onNewFilter={(data) => setValues(data)} />
