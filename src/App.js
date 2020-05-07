@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import './App.css';
+import React, { useEffect, useState } from "react";
+import "./App.css";
 // import { Values } from "./components/Values";
 import { Columns } from "./components/columns";
 import { ValueForm } from "./components/filter_form";
@@ -11,29 +11,26 @@ function App() {
   const [values, setValues] = useState([]);
 
   useEffect(() => {
-    fetch('/simple_chart').then(response =>
-      response.json().then(data => {
+    fetch("/simple_chart").then((response) =>
+      response.json().then((data) => {
         setValues(data);
       })
     );
-  }, [])
-  ;
-
+  }, []);
+  console.log(values);
   // console.log(values);
   return (
     <div className="App">
-    <Header as='h1' style={{marginTop : 50}}>
-      Data Visualizer
-    </Header>
-    <Columns values = {values} />
-    <ColumnCheckboxes values={values}/>
-    <Container style={{marginTop : 50}}>
-      <ValueForm onNewFilter={data => setValues(data)} />
-      <LineChart values={values}/>
-      {/* <Values values={values} /> */}
-    </Container>
-
-
+      <Header as="h1" style={{ marginTop: 50 }}>
+        Data Visualizer
+      </Header>
+      {values.length > 0 && <Columns values={values} />}
+      <ColumnCheckboxes values={values} />
+      <Container style={{ marginTop: 50 }}>
+        <ValueForm onNewFilter={(data) => setValues(data)} />
+        <LineChart values={values} />
+        {/* <Values values={values} /> */}
+      </Container>
     </div>
   );
 }
