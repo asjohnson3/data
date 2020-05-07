@@ -1,24 +1,39 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {useEffect, useState} from 'react';
 import './App.css';
+// import { Values } from "./components/Values";
+import { Columns } from "./components/columns";
+import { ValueForm } from "./components/filter_form";
+import { LineChart } from "./components/line_chart";
+import { ColumnCheckboxes } from "./components/Checkboxes";
+import { Header, Container } from "semantic-ui-react";
 
 function App() {
+  const [values, setValues] = useState([]);
+
+  useEffect(() => {
+    fetch('/simple_chart').then(response =>
+      response.json().then(data => {
+        setValues(data);
+      })
+    );
+  }, [])
+  ;
+
+  // console.log(values);
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <Header as='h1' style={{marginTop : 50}}>
+      Data Visualizer
+    </Header>
+    <Columns values = {values} />
+    <ColumnCheckboxes values={values}/>
+    <Container style={{marginTop : 50}}>
+      <ValueForm onNewFilter={data => setValues(data)} />
+      <LineChart values={values}/>
+      {/* <Values values={values} /> */}
+    </Container>
+
+
     </div>
   );
 }
