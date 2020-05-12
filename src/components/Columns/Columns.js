@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { Form, Checkbox, Button } from "semantic-ui-react";
-import Input from "./Input";
+import { Form, Button, Grid } from "semantic-ui-react";
+import Input from "../Input";
+import "./Columns.css";
 
 export const Columns = ({ values, onNewFilter }) => {
   let columns = values["0"];
@@ -40,17 +41,24 @@ export const Columns = ({ values, onNewFilter }) => {
   }
   return (
     <Form onSubmit={handleSubmit}>
-      {Object.keys(columns).map((key) => (
-        <Form.Field>
-          <Input
-            key={key}
-            label={key}
-            value={state[key]}
-            onChange={handleChange}
-          />
-        </Form.Field>
-      ))}
-      <Button type="submit">SUBMIT</Button>
+      <Grid>
+        <Grid.Row columns={2}>
+          {Object.keys(columns).map((key) => (
+            <Grid.Column>
+              <Input
+                label={key}
+                key={key}
+                value={state[key]}
+                onChange={handleChange}
+              />
+            </Grid.Column>
+          ))}
+        </Grid.Row>
+      </Grid>
+
+      <Button color="teal" type="submit" className="filtering-submit-button">
+        SUBMIT
+      </Button>
     </Form>
   );
 };
